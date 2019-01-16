@@ -1,0 +1,22 @@
+-- use decimals and rounding up from 9
+
+-- test error inputs for max_phase < max_cont
+new_tracker(99.995, 99.9995)
+new_tracker(999.995, 999.9995)
+
+-- Test errors for max_phase or max_cont < zero
+new_tracker(0.000, 99.9995)
+new_tracker(00.000, 99.9995)
+new_tracker(-0.000, 99.9995)
+new_tracker(-0.001, 99.9995)
+new_tracker(999.995, -0.001)
+
+new_tracker(99.995, 99.995)
+new_phase("pid1","Compacting",4,<<glass, glass, glass, metal, plastic>>)
+new_phase("pid2","Compacting",2,<<glass, glass, glass, metal, plastic>>)
+new_container("cid1", [metal, 99.994], "pid2")
+new_container("cid2", [metal, 0.001], "pid2")
+new_container("cid3", [metal, 99.995], "pid1")
+new_container("cid4", [metal, 0.005], "pid1")
+new_container("cid5", [metal, 0.005], "pid2")
+new_container("cid6", [metal, 0.001], "pid2")

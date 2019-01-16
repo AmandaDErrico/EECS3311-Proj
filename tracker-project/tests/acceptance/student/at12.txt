@@ -1,0 +1,6 @@
+new_phase("pid1","Compacting",10,<<glass, glass, metal, glass, metal, plastic, liquid, liquid, liquid>>)
+new_phase("pid2","Compacting",10,<<glass, glass, metal, glass, metal, plastic, liquid, liquid, liquid>>)
+-- undo with new_phase called before new_tracker
+new_tracker(40,10)
+undo
+undo

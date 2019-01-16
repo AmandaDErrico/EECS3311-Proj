@@ -1,0 +1,25 @@
+new_tracker(6,4)
+new_phase("pid1","Compacting",2,<<glass, metal>>)
+new_phase("pid2","Compacting",2,<<glass, metal>>)
+-- cont rad 5, e14
+new_container("cid1", [glass, 5.0], "pid2")
+new_container("cid1", [glass, 3.0], "pid2")
+-- add pid3 after inserting cid1 container into phase pid2, e1 current tracker in use
+new_phase("pid3","Compacting",2,<<glass, metal>>)
+-- phase rad sum now 6, reached capacity
+new_container("cid2", [metal, 3.0], "pid2")
+-- not e1 error, e1 error only if adding new phase or tracker. Can successfully add cid4 to pid1 phase since pid1 was created when containers were empty.
+new_container("cid4", [glass, 3.0], "pid1")
+-- phase rad sum for pid1 now exceeded its own cap, e11
+new_container("cid3", [glass, 1.0], "pid2")
+remove_container("cid3")
+remove_container("cid4")
+remove_container("cid1")
+-- remove phase pid2 while still has container cid2 in it
+remove_phase("pid2")
+remove_phase("pid1")
+remove_container("cid2")
+remove_phase("pid1")
+remove_phase("pid3")
+-- see if max container rad will generate error message-- should not since the rad_sum reset to 0
+new_container("cid2", [metal, 4.0], "pid2")

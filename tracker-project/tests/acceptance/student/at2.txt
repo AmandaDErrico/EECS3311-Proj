@@ -1,0 +1,62 @@
+new_tracker(10,8)
+new_phase("pid1","Compacting",2,<<glass, metal>>)
+new_container("cid1", [glass, 2.0], "pid1")
+new_container("cid1", [plastic, 2.0], "pid1")
+new_container("cid2", [plastic, 2.0], "pid1")
+new_container("cid3", [metal, 2.0], "pid1")
+-- exceeds cap
+new_container("cid4", [plastic, 2.0], "pid1")
+
+-- moving cids to pid2, pid2 dne
+move_container("cid1", "pid1", "pid2")
+-- moving cids to pid1, pid3 dne
+move_container("cid1", "pid3", "pid1")
+move_container("cid1", "pid3", "pid2")
+-- moving cids that dne
+move_container("cid2", "pid1", "pid2")
+-- moving cids where source = dest, but pid dne. 
+move_container("cid10", "pid1", "pid1")
+-- Still checks for pids being equal first
+move_container("cid1", "pid2", "pid2")
+-- source = dest AND pid exists
+move_container("cid1", "pid1", "pid1")
+
+-- can't add cid3, already in tracker
+new_container("cid3", [metal, 2.0], "pid2")
+
+-- remove containers and add phases in beginning
+remove_phase("pid1")
+remove_container("cid1")
+remove_container("cid3")
+
+new_phase("pid2","Compacting",2,<<glass, plastic, liquid>>)
+new_container("cid2", [liquid, 8.0], "pid2")
+new_container("cid4", [plastic, 2.0], "pid2")
+
+-- add containers back
+new_container("cid1", [glass, 9.0], "pid1") --e14
+new_container("cid1", [glass, 3.0], "pid1")
+
+-- cid1 not in source phase, but exists
+move_container("cid1", "pid2", "pid1")
+
+-- move to pid2, capacity will reach
+move_container("cid1", "pid1", "pid2")
+
+-- move to pid1 which will exceed cap, even when cid2 dne in pid1 and liquid isn't in phase1. Will mention not in source phase.
+move_container("cid2", "pid1", "pid2")
+
+-- moving where max phase rad will exceed in phase, even when liquid phase isn't in phase1.
+move_container("cid2", "pid2", "pid1")
+
+-- pid1 doesn't expect material plastic like pid2 does
+move_container("cid4", "pid2", "pid1")
+
+
+-- start removing phases in pid2
+remove_container("cid2")
+remove_container("cid4")
+
+new_container("cid2", [glass, 3.0], "pid2")
+new_container("cid4", [glass, 2.0], "pid2")
+--move_container("cid2", "pid2", "pid1")

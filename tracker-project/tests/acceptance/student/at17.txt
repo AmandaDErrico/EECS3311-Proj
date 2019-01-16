@@ -1,0 +1,23 @@
+new_tracker(10,-4)
+undo
+new_phase("pid1","Compacting",10,<<glass, glass, metal, glass, metal, plastic, liquid, liquid, liquid>>)
+undo
+redo
+new_tracker(10,3)
+new_phase("pid2","Compacting",10,<<glass, glass, metal, glass, metal, plastic, liquid, liquid, liquid>>)
+undo
+redo
+new_phase("","Compacting",10,<<glass, glass, metal, metal, plastic, liquid, liquid, liquid>>)
+undo
+undo
+undo
+undo
+undo
+undo
+new_phase("","Compacting",10,<<glass, glass, metal, glass, metal, plastic, liquid, liquid, liquid>>)
+undo
+undo
+undo
+undo
+move_container("cid1", "C", "!D")
+undo -- goes back to new_tracker, does not get deleted from undo_stk

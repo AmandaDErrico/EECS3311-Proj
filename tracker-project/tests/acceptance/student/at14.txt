@@ -1,0 +1,101 @@
+undo
+redo
+undo
+redo
+new_tracker(10,10)
+-- having phase be first in stack means phase rad and cont rad must be 0
+new_phase("pid1","Compacting",10,<<glass, glass, metal, glass, metal, plastic, liquid, liquid, liquid>>)
+undo
+new_phase("pid1","Compacting",10,<<glass, glass, metal, glass, metal, plastic, liquid, liquid, liquid>>)
+undo
+undo
+new_phase("pid1","Compacting",10,<<glass, glass, metal, glass, metal, plastic, liquid, liquid>>)
+new_phase("pid2","Compacting",10,<<glass, glass, metal, glass, metal, plastic, liquid, liquid, liquid>>)
+undo
+redo
+new_phase("pid2","Compacting",10,<<glass, glass, metal, glass, metal, plastic, liquid, liquid, liquid>>)
+undo
+redo
+new_container("cid1", [metal, 1.0], "pid2")
+new_container("cid2", [metal, 9.0], "pid2")
+undo
+new_container("cid2", [metal, 9.0], "pid2")
+redo
+remove_container("cid2")
+undo
+redo
+undo
+undo
+redo
+redo
+redo
+remove_container("cid5")
+undo
+redo
+new_container("cid2", [metal, 9.0], "pid2")
+remove_container("cid1")
+remove_container("cid2")
+undo
+undo
+redo
+remove_container("cid2")
+undo
+undo
+remove_container("cid3")
+undo
+undo
+redo
+redo
+redo
+
+-- undoing after nothing in redo stk
+undo
+
+redo
+undo
+undo
+redo
+undo
+redo
+redo
+redo
+undo
+undo
+redo
+redo
+remove_phase("pid2")
+undo
+redo
+remove_container("cid2")
+remove_container("cid1")
+remove_phase("pid1")
+undo
+remove_phase("pid5")
+undo
+redo
+redo
+undo
+undo
+redo
+undo
+redo 
+redo
+redo
+undo
+undo
+redo
+undo
+undo -- cid2 back in containers
+undo 
+new_container("cid3", [metal, 1.0], "pid2") -- phase rad now 11, exceeds
+new_container("cid2", [metal, 1.0], "pid2")
+remove_phase("cid5")
+undo
+undo
+redo
+undo
+undo
+redo
+redo
+redo
+redo

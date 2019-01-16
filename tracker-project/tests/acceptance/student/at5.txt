@@ -1,0 +1,13 @@
+new_tracker(40,10)
+new_phase("pid1","Compacting",10,<<liquid, metal>>)
+new_phase("pid2","Compacting",10,<<liquid, metal>>)
+new_phase("pid3",";Compacting",10,<<liquid, metal>>)
+new_container("cid1", [liquid, 2.0], "pid2")
+--cid already in tracker
+new_container("cid", [metal, 2.0], "pid2")
+new_container("cid", [metal, 2.0], "pid1")
+remove_container("cid")
+remove_container("cid1")
+-- remove cid that isn't there. 
+remove_container("cid1")
+move_container("cid2", "pid2", "pid1")

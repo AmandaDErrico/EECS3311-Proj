@@ -1,0 +1,40 @@
+new_tracker(10,10)
+new_phase("pid1","Compacting",2,<<glass, glass, glass, metal, plastic>>)
+new_phase("pid2","Compacting",2,<<glass, glass, glass, metal, liquid, liquid, liquid>>)
+new_container("cid1", [metal, 1.0], "pid2")
+new_container("cid2", [liquid, 9.0], "pid2")
+new_tracker(10,-1)
+undo
+undo
+undo
+undo
+undo
+undo
+undo
+redo
+redo
+redo
+redo
+redo
+redo
+redo
+redo
+move_container("c", "pid1", "pid2")
+undo
+undo
+redo
+redo
+new_container("", [metal, 9.0], "pid2")
+new_tracker(10,10)
+undo
+new_container("c", [plastic, 9.0], "pid2")
+new_container("c", [metal, -9.0], "")
+new_container("c", [metal, -9.0], "p")
+new_container("c", [plastic, 9.0], "pid1")
+new_container("c", [plastic, 9.0], "pid1")
+remove_container("c!")
+undo
+move_container("c", "pid1", "pid1")
+move_container("c", "pid3", "pid1")
+move_container("c", "pid1", "pid2")
+move_container("cid2", "pid2", "pid1")

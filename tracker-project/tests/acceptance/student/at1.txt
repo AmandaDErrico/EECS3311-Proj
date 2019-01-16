@@ -1,0 +1,44 @@
+new_tracker(50,10)
+new_tracker(-1, 10)
+new_tracker(10, -1)
+new_tracker(10, 30)
+new_tracker(40,10)
+new_phase("pid1","Compacting",10,<<glass, glass, metal, glass, metal, plastic, liquid, liquid, liquid>>)
+new_phase("","Compacting",10,<<glass, glass, metal, glass, metal, plastic, liquid, liquid, liquid>>)
+new_phase("","Compacting",0,<<glass, glass, metal, glass, metal, plastic, liquid, liquid, liquid>>)
+new_phase("pid1","Compacting",0,<<glass, glass, metal, glass, metal, plastic, liquid, liquid, liquid>>)
+new_phase("?id1","Compacting",0,<<glass, glass, metal, glass, metal, plastic, liquid, liquid, liquid>>)
+new_phase("0?id1","Compacting",0,<<glass, glass, metal, glass, metal, plastic, liquid, liquid>>)
+new_phase("0?id1","Compacting",-1,<<plastic, glass, glass, metal, metal, liquid, liquid, liquid>>)
+new_phase("0?id1","",-1,<<glass, glass, metal, glass, metal, plastic, liquid, plastic, liquid>>)
+new_phase("?0id1","c",10,<<>>)
+new_phase("pid1","Compacting",9,<<metal, glass, metal, glass, metal, plastic, liquid, liquid, liquid>>)
+new_phase("pid2","Compacting",9,<<metal, glass, metal, glass, metal, plastic, liquid, liquid, liquid>>)
+new_container("cid1", [metal, 2.0], "pid2")
+new_container("cid10", [metal, 2.0], "pid1")
+new_container("cid2", [metal, 4.0], "pid2")
+-- cid2 already appears before, e10
+new_container("cid2", [metal, 4.0], "pid1")
+new_container("cid2", [glass, 4.0], "pid2")
+-- cid first letter not alpha, e5
+new_container("?cid2", [glass, 4.0], "pid2")
+-- pid first letter not alpha
+new_container("cid2", [glass, 4.0], "?pid2")
+-- pid empty string, e5
+new_container("cid2", [glass, 4.0], "")
+-- cid empty string, e5
+new_container("", [metal, 4.0], "pid2")
+new_container("cid3", [glass, -1.0], "pid2")
+new_container("cid3", [glass, 0.0], "pid2")
+-- pid not in phases list, e9
+new_container("cid4", [metal, 4.0], "pid3")
+-- cid2 already in container, even if pid3 doesn't exist, e10
+new_container("cid2", [metal, 4.0], "pid3")
+
+-- current tracker in use, e1 -- containers not empty
+new_phase("pid5","Compacting",2,<<glass, metal>>)
+new_container("cid3", [plastic, 0.0], "pid5")
+
+new_tracker(30,10)
+new_phase("pid1","Compacting",2,<<glass, metal>>)
+new_container("cid3", [plastic, 0.0], "pid1")

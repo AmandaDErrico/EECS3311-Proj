@@ -1,0 +1,10 @@
+new_tracker(40,10)
+new_tracker(-1, 10)
+new_tracker(10, -1)
+new_tracker(10, 30)
+new_tracker(40,10)
+undo
+undo
+redo
+redo
+new_phase("pid1","Compacting",10,<<glass, glass, metal, glass, metal, plastic, liquid, liquid, liquid>>)

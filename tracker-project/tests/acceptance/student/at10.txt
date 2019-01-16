@@ -1,0 +1,14 @@
+new_tracker(30,20)
+new_phase("pid1","Compacting",10,<<glass, glass, metal, glass, metal, plastic, liquid, liquid, liquid>>)
+undo
+undo
+new_tracker(40,10)
+redo
+undo
+-- test unpacking and assay phase types
+new_phase("pid1","Unpacking",10,<<glass, glass, metal, glass, metal, plastic, liquid, liquid, liquid>>)
+new_phase("pid1","Assay",10,<<glass, glass, metal, glass, metal, plastic, liquid, liquid, liquid>>)
+undo
+undo
+redo
+redo
